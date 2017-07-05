@@ -4,12 +4,13 @@
   https://github.com/carloscabo/jquery-text-shake
 
   Usage:
-  $element).textShake({ options })
+  $element).textShake({ options });
 */
 ;(function ($, window, document, undefined) {
   "use strict";
 
-  var pluginName = "textShake",
+  var
+    pluginName = "textShake",
     defaults = {
       letterdelay: 60,
       autoplay: true,
@@ -32,18 +33,20 @@
 
   // Avoid Plugin.prototype conflicts
   $.extend(Plugin.prototype, {
+
     init: function () {
       var
         $el = this.$el;
       this._text = $el.text();
       this._len = $el.text().length;
       this._pos = 1;
-      $el.attr('data-text-rumble', this._text).html('&nbsp;');
+      $el.attr('data-text-shake', this._text).html('&nbsp;');
 
       if (this.settings.autoplay) {
         this.play();
       }
     },
+
     play: function (text) {
       var _t = this;
       setTimeout(function(){
@@ -68,11 +71,15 @@
   // A really lightweight plugin wrapper around the constructor,
   // preventing against multiple instantiations
   $.fn[pluginName] = function (options) {
-    return this.each(function () {
-      if (!$.data(this, "plugin_" + pluginName)) {
-        $.data(this, "plugin_" +
-          pluginName, new Plugin(this, options));
-      }
+    console.log('plugin is called');
+    $.each( this, function() {
+      console.log('...');
+    })
+    $(this).each(function(idx, el) {
+      console.log(el);
+      /*if (!$.data(this, "plugin_textShake")) {
+        $.data(this, "plugin_textShake", new Plugin(this, options));
+      }*/
     });
   };
 
