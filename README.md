@@ -1,7 +1,7 @@
 # JQuery textShake v0.1
 JQuery plugin that provides some animations to show text
 
-![GitHub Logo](sample.gif)
+![Smple](sample.gif)
 
 # Requirements
 
@@ -16,9 +16,13 @@ Available options.
 
 ```
 $(element).textShake({
-  letterdelay: 60,
+  letter_delay: 60,
+  split_words: 8,
   autoplay: true,
-  callback: null
+  fix_heght: false,
+  onComplete: function( obj ) {
+    console.log(obj);
+  }
 });
 ```
 

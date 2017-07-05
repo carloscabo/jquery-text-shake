@@ -12,9 +12,11 @@
   var
     pluginName = "textShake",
     defaults = {
-      letterdelay: 60,
+      letter_delay: 60,
+      split_words: 8,
       autoplay: true,
-      callback: null
+      fix_heght: false,
+      onComplete: null,
     };
 
   // The actual plugin constructor
@@ -37,50 +39,80 @@
     init: function () {
       var
         $el = this.$el;
-      this._text = $el.text();
-      this._len = $el.text().length;
-      this._pos = 1;
+
+      if (this.settings.fix_height) {
+        this.$el.css('height', this.$el.height());
+      }
+
+      this._text = $el.text().replace(/^\s+|\s+$/g, ''); // Trim including breaklines
+      this._len  = $el.text().length;
+      this._pos  = 1;
       $el.attr('data-text-shake', this._text).html('&nbsp;');
 
       if (this.settings.autoplay) {
         this.play();
       }
+
     },
 
     play: function (text) {
       var _t = this;
-      setTimeout(function(){
 
-        _t._timer = setInterval(function(){
-          if ( _t._pos > _t._len ) {
-            _t.$el.text( _t._text );
-            clearInterval( _t._timer );
-          } else {
-            var
-              _text = _t._text,
-              shuffled = _text.split('').sort(function () { return 0.5 - Math.random() }).join('').substr(2, _t._pos);
-            _t.$el.text( shuffled );
-            _t._pos++;
+      _t._timer = setInterval(function(){
+        if ( _t._pos > _t._len ) {
+          _t.$el.text( _t._text );
+          clearInterval( _t._timer );
+          if (typeof _t.settings.onComplete === 'function') {
+            _t.settings.onComplete( this );
           }
-        }, _t.settings.letterdelay);
+        } else {
+          var
+            _text = _t._text,
+            shuffled = _text.split('').sort(function () { return 0.5 - Math.random() }).join('').replace(/\s\s+/g, ' ').substr(2, _t._pos);
+          // console.log(shuffled);
 
-      }, 100);
+          // Split long words with spaces
+          if (_t.settings.split_words) {
+            var
+              words = shuffled.trim().split(' '),
+              done = false;
+            for (var i = 0, len = words.length; i < len; i++) {
+              var
+                word = words[i];
+              if (word.length > _t.settings.split_words ) {
+                // console.log(words);
+                // debugger;
+                // Replace every n char with space, splits the
+                var word_splitted = word.replace(new RegExp('(' + '.'.repeat(_t.settings.split_words) + ').', 'g'), "$1 ").trim().split();
+                // Replaces orginal word by spitted one
+                Array.prototype.splice.apply(words, [i, 1].concat(word_splitted));
+
+                done = true;
+              }
+
+            }
+            if ( done ) {
+              shuffled = words.join(' ');
+            }
+          }
+          _t.$el.text( shuffled );
+          _t._pos++;
+        }
+      }, _t.settings.letter_delay);
+
     }
   });
 
   // A really lightweight plugin wrapper around the constructor,
   // preventing against multiple instantiations
-  $.fn[pluginName] = function (options) {
-    console.log('plugin is called');
-    $.each( this, function() {
-      console.log('...');
-    })
-    $(this).each(function(idx, el) {
-      console.log(el);
-      /*if (!$.data(this, "plugin_textShake")) {
-        $.data(this, "plugin_textShake", new Plugin(this, options));
-      }*/
+  $.fn[ pluginName ] = function( options ) {
+      return this.each( function() {
+        if ( !$.data( this, "plugin_" + pluginName ) ) {
+          $.data( this, "plugin_" +
+          pluginName, new Plugin(this, options));
+      }
     });
   };
+
 
 })(jQuery, window, document);
