@@ -8,13 +8,13 @@ JQuery plugin that provides some animations to show text
 - JQuery 1.7+
 
 # Usage
-```
+```javascript
 $(element).textShake(); // Default options
 ```
 
 Available options.
 
-```
+```javascript
 $(element).textShake({
   letter_delay: 60,
   split_words: 8,
