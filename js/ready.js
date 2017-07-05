@@ -22,9 +22,16 @@ $(window).load(function() {
     fix_height: true
   });
 
-  // $('.text-3').textShake({
-  //   direction: -1
-  // });
+  // Default options
+  $('.text-4').textShake({
+    autoplay: false
+  });
 
+});
 
+$(document).ready(function(){
+  // La magia aquí
+  $('.play-sample-4').on('click', function(e) {
+    $('.text-4').data('textShake').play();
+  })
 });

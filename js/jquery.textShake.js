@@ -46,7 +46,6 @@
 
       this._text = $el.text().replace(/^\s+|\s+$/g, ''); // Trim including breaklines
       this._len  = $el.text().length;
-      this._pos  = 1;
       $el.attr('data-text-shake', this._text).html('&nbsp;');
 
       if (this.settings.autoplay) {
@@ -57,6 +56,10 @@
 
     play: function (text) {
       var _t = this;
+
+      clearInterval(_t._timer);
+      this._pos = 1;
+      _t.$el.attr('data-text-shake', _t._text).html('&nbsp;');
 
       _t._timer = setInterval(function(){
         if ( _t._pos > _t._len ) {
@@ -107,9 +110,8 @@
   // preventing against multiple instantiations
   $.fn[ pluginName ] = function( options ) {
       return this.each( function() {
-        if ( !$.data( this, "plugin_" + pluginName ) ) {
-          $.data( this, "plugin_" +
-          pluginName, new Plugin(this, options));
+        if ( !$.data( this, pluginName ) ) {
+          $.data( this, pluginName, new Plugin(this, options));
       }
     });
   };

@@ -26,5 +26,20 @@ $(element).textShake({
 });
 ```
 
+# Launch effec ptogramatically
 
+```javascript
+// Start efect with autoplay set to false
+$(element).textShake({
+  autoplay: false
+});
+```
+
+Launch the effect callin  `.play()` on the element:
+
+```javascript
+  $(element).data('textShake').play();
+```
+
+# Changelog
 
