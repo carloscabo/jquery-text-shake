@@ -1,3 +1,7 @@
 $(window).load(function () {
-  alert("window load occurred!");
+  // We use "load" instead of "ready" to be sure the fontfaces in the demo are loaded
+
+  // Default options
+  $('.text-1').textShake();
+
 });
