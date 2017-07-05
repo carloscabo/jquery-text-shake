@@ -3,6 +3,8 @@ JQuery plugin that provides some animations to show text
 
 ![Smple](sample.gif)
 
+[Watch the demo included in the repo](https://htmlpreview.github.io/?https://raw.githubusercontent.com/carloscabo/jquery-text-shake/master/index.html)
+
 # Requirements
 
 - JQuery 1.7+
