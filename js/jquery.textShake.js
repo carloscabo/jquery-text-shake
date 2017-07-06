@@ -108,11 +108,18 @@
 
   // A really lightweight plugin wrapper around the constructor,
   // preventing against multiple instantiations
-  $.fn[ pluginName ] = function( options ) {
-      return this.each( function() {
-        if ( !$.data( this, pluginName ) ) {
-          $.data( this, pluginName, new Plugin(this, options));
+  $.fn[pluginName] = function ( methodOrOptions ) {
+    return this.each( function() {
+      if ( typeof methodOrOptions === 'object' || !methodOrOptions ) {
+        if ( !$.data(this, pluginName) ) {
+          $.data(this, pluginName, new Plugin(this, methodOrOptions));
+        }
+      } else if ( Plugin[methodOrOptions] ) {
+        return Plugin[methodOrOptions].apply(this, Array.prototype.slice.call(arguments, 1));
+      } else {
+        $.error('Method ' + methodOrOptions + ' does not exist on jQuery.' + pluginName);
       }
+
     });
   };
 
