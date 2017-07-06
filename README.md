@@ -40,7 +40,7 @@ $(element).textShake({
 Launch the effect callin  `.play()` on the element:
 
 ```javascript
-  $(element).data('textShake').play();
+  $(element).textShake('play');
 ```
 
 # Changelog
