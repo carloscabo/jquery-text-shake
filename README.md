@@ -1,4 +1,4 @@
-# JQuery textShake v0.1
+# JQuery textShake v0.2
 JQuery plugin that provides some animations to show text
 
 ![Smple](sample.gif)
