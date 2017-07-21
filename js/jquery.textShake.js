@@ -1,5 +1,5 @@
 /*!
-  JQuery textShake v0.1 by CarlosCabo 05/07/2017
+  JQuery textShake v0.2 by CarlosCabo 21/07/2017
   JQuery plugin that provides some animations to show text
   https://github.com/carloscabo/jquery-text-shake
 
@@ -12,6 +12,7 @@
   var
     pluginName = "textShake",
     defaults = {
+      trim_on_start: true,
       letter_delay: 60,
       split_words: 8,
       autoplay: true,
@@ -44,8 +45,12 @@
         this.$el.css('height', this.$el.height());
       }
 
-      this._text = $el.text().replace(/^\s+|\s+$/g, ''); // Trim including breaklines
-      this._len  = $el.text().length;
+      // Trim including breaklines
+      this._text = $el.text();
+      if ( this.settings.trim_on_start ) {
+        this._text = this._text.replace(/^\s+|\s+$/g, '').trim();
+      }
+      this._len  = this._text.length;
       $el.attr('data-text-shake', this._text).html('&nbsp;');
 
       if (this.settings.autoplay) {
@@ -116,4 +121,4 @@
     });
   };
 
-  })(jQuery, window, document);
+})(jQuery, window, document);
