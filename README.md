@@ -28,7 +28,7 @@ $(element).textShake({
 });
 ```
 
-# Launch effec ptogramatically
+# Launch effect programatically
 
 ```javascript
 // Start efect with autoplay set to false
