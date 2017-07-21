@@ -16,7 +16,7 @@
       letter_delay: 60,
       split_words: 8,
       autoplay: true,
-      fix_heght: false,
+      fix_height: false,
       onComplete: null,
     };
 
